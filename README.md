@@ -15,6 +15,7 @@ cmake .. && make
 ```
 cd egs/gop-compute
 ./run.sh
+```
 
 ## Results
 You can find the GOP raw scores in `eval_gop/gop.1` and the corresponding phoneme sequence in `eval_gop/phonemes.1`
