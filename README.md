@@ -1,4 +1,5 @@
 
+
 # kaldi-gop
 This project computes GOP (Goodness of Pronunciation) bases on Kaldi.
 
@@ -23,3 +24,5 @@ You can find the GOP raw scores in `eval_gop/gop.1` and the corresponding phonem
 ## Use Librispeech tri6b acousitc and language model
 1. Download the related [data](https://drive.google.com/a/tamu.edu/file/d/1Zynno632MqvjUv12ZBzY3FCKiyuTscaz/view?usp=drivesdk) and put them in `data` and `eval`
 1. `./run_tri6b.sh`
+
+Huge thanks to Junbo Zhang for his initial kaldi-gop [repository](https://github.com/jimbozhang/kaldi-gop). I added the phoneme output and added an example on how to use another acoustic model for the computation.
