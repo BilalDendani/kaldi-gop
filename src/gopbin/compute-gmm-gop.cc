@@ -24,14 +24,14 @@ int main(int argc, char *argv[]) {
     
     const char *usage =
         "Compute GOP with GMM-based models.\n"
-        "Usage:   compute-gmm-gop [options] tree-in model-in lexicon-fst-in feature-rspecifier transcriptions-rspecifier gop-wspecifier\n"
+        "Usage:   compute-gmm-gop [options] tree-in model-in lexicon-fst-in feature-rspecifier transcriptions-rspecifier gop-wspecifier phoneme-wspecifier\n"
         "e.g.: \n"
-        " compute-gmm-gop tree 1.mdl lex.fst scp:train.scp ark:train.tra ark,t:1.gop\n";
+        " compute-gmm-gop tree 1.mdl lex.fst scp:train.scp ark:train.tra ark,t:1.gop ark,t:1.phoneme\n";
 
     ParseOptions po(usage);
 
     po.Read(argc, argv);
-    if (po.NumArgs() != 6) {
+    if (po.NumArgs() != 7) {
       po.PrintUsage();
       exit(1);
     }
@@ -42,10 +42,12 @@ int main(int argc, char *argv[]) {
     std::string feature_rspecifier = po.GetArg(4);
     std::string transcript_rspecifier = po.GetArg(5);
     std::string gop_wspecifier = po.GetArg(6);
+    std::string phoneme_wspecifier = po.GetArg(7);
 
     SequentialBaseFloatMatrixReader feature_reader(feature_rspecifier);
     RandomAccessInt32VectorReader transcript_reader(transcript_rspecifier);
     BaseFloatVectorWriter gop_writer(gop_wspecifier);
+    Int32VectorWriter phoneme_writer(phoneme_wspecifier);
 
     GmmGop gop;
     gop.Init(tree_in_filename, model_in_filename, lex_in_filename);
@@ -62,6 +64,7 @@ int main(int argc, char *argv[]) {
 
       gop.Compute(features, transcript);
       gop_writer.Write(utt, gop.Result());
+      phoneme_writer.Write(utt, gop.Phonemes());
     }
     KALDI_LOG << "Done.";
     return 0;

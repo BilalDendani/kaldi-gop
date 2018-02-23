@@ -43,6 +43,7 @@ cp $srcdir/cmvn_opts $dir 2>/dev/null # cmn/cmvn option.
 delta_opts=`cat $srcdir/delta_opts 2>/dev/null`
 cp $srcdir/delta_opts $dir 2>/dev/null
 
+# Basically check to see if data/feats.scp or sdata exists or not
 [[ -d $sdata && $data/feats.scp -ot $sdata ]] || split_data.sh $data $nj || exit 1;
 
 utils/lang/check_phones_compatible.sh $lang/phones.txt $srcdir/phones.txt || exit 1;
@@ -69,11 +70,11 @@ echo "$0: computing GOP in $data using model from $srcdir, putting results in $d
 mdl=$srcdir/final.mdl
 tra="ark:utils/sym2int.pl --map-oov $oov -f 2- $lang/words.txt $sdata/JOB/text|";
 $cmd JOB=1:$nj $dir/log/gop.JOB.log \
-  compute-gmm-gop $dir/tree $dir/final.mdl $lang/L.fst "$feats" "$tra" "ark,t:$dir/gop.JOB" || exit 1;
+  compute-gmm-gop $dir/tree $dir/final.mdl $lang/L.fst "$feats" "$tra" "ark,t:$dir/gop.JOB" "ark,t:$dir/phonemes.JOB" || exit 1;
 
 # Convenience for debug
 # apply-cmvn --utt2spk=ark:data/eval/split1/1/utt2spk scp:data/eval/split1/1/cmvn.scp scp:data/eval/split1/1/feats.scp ark:- | add-deltas ark:- ark,t:data/eval/feats.1.ark.txt
 # utils/sym2int.pl --map-oov `cat data/lang/oov.int` -f 2- data/lang/words.txt data/eval/text > data/eval/trans
-# compute-gmm-gop exp/tri1/tree exp/tri1/final.mdl data/lang/L.fst ark,t:data/eval/feats.1.ark.txt ark,t:data/eval/trans ark,t:gop.1
+# compute-gmm-gop exp/tri1/tree exp/tri1/final.mdl data/lang/L.fst ark,t:data/eval/feats.1.ark.txt ark,t:data/eval/trans ark,t:gop.1 ark,t:phonemes.1
 
 echo "$0: done computing GOP."
