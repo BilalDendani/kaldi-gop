@@ -15,3 +15,10 @@ cmake .. && make
 ```
 cd egs/gop-compute
 ./run.sh
+
+## Results
+You can find the GOP raw scores in `eval_gop/gop.1` and the corresponding phoneme sequence in `eval_gop/phonemes.1`
+
+## Use Librispeech tri6b acousitc and language model
+1. Download the related [data](https://drive.google.com/a/tamu.edu/file/d/1Zynno632MqvjUv12ZBzY3FCKiyuTscaz/view?usp=drivesdk) and put them in `data` and `eval`
+1. `./run_tri6b.sh`
