@@ -71,6 +71,7 @@ mdl=$srcdir/final.mdl
 tra="ark:utils/sym2int.pl --map-oov $oov -f 2- $lang/words.txt $sdata/JOB/text|";
 $cmd JOB=1:$nj $dir/log/gop.JOB.log \
   compute-gmm-gop $dir/tree $dir/final.mdl $lang/L.fst "$feats" "$tra" "ark,t:$dir/gop.JOB" "ark,t:$dir/phonemes.JOB" || exit 1;
+  utils/int2sym.pl -f 2- $dir/phones.txt $dir/phonemes.$JOB > $dir/phonemes_sym.$JOB || exit 1;
 
 # Convenience for debug
 # apply-cmvn --utt2spk=ark:data/eval/split1/1/utt2spk scp:data/eval/split1/1/cmvn.scp scp:data/eval/split1/1/feats.scp ark:- | add-deltas ark:- ark,t:data/eval/feats.1.ark.txt

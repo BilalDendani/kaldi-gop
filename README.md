@@ -27,5 +27,6 @@ You can find the GOP raw scores in `eval_gop/gop.1` and the corresponding phonem
 1. Run `./run_tri6b.sh` for usage information
 1. If you want to use your own data, you can organize your files similar to `data/sample_raw_data/` in the sample data package
 1. The code assumes that the name of the root dir of your own data is the same as the speaker's ID, see `data/sample_raw_data/spk2gender`
+1. This script also outputs the symbolic phoneme sequence in `eval_gop/phonemes_sym.*`
 
 Huge thanks to Junbo Zhang for his initial kaldi-gop [repository](https://github.com/jimbozhang/kaldi-gop). I added the phoneme output and added an example on how to use another acoustic model for the computation.
